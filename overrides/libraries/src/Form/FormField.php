@@ -2,7 +2,7 @@
 /**
  * Joomla! Content Management System
  *
- * @copyright  Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2020 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -971,7 +971,7 @@ abstract class FormField
 
 		$options['rel'] = '';
 		
-		if ((empty($options['hiddenLabel']) && $this->getAttribute('hiddenLabel')) || !$attribs['label'])
+		if ((empty($options['hiddenLabel']) && $this->getAttribute('hiddenLabel')) || !isset($attribs['label']))
 		{
 			$options['hiddenLabel'] = true;
 		}
@@ -1051,7 +1051,9 @@ abstract class FormField
 	 */
 	protected function getLayoutPaths()
 	{
-		return array();
+		$renderer = new FileLayout('default');
+
+		return $renderer->getDefaultIncludePaths();
 	}
 
 	/**
@@ -1068,8 +1070,6 @@ abstract class FormField
 		$renderer = new FileLayout($layoutId);
 
 		$renderer->setDebug($this->isDebugEnabled());
-
-		$renderer->setComponent('none');
 		
 		$layoutPaths = $this->getLayoutPaths();
 

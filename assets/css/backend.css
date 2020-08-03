@@ -1,8 +1,6 @@
 .field-media-wrapper .input-prepend.input-append input {
-	width: auto;
+	/* width: auto; */
 }
-
-
 
 .fl-subform-desc .control-label {
 	display: block;

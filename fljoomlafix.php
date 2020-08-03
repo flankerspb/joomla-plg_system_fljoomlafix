@@ -84,7 +84,9 @@ class PlgSystemFlJoomlaFix extends JPlugin
 			{
 				$class = self::getClassName($path.$file);
 				
-				$xml .= '<fields name="' . $class . '">';
+				$field_name = str_replace('\\', '-', $class);
+				
+				$xml .= '<fields name="' . $field_name . '">';
 				
 				$xml .= '<field type="radio" name="enable" label="' . $class . '" description="' . $file . '" class="btn-group btn-group-yesno" default="1"><option value="0">JNO</option><option value="1">JYES</option></field>';
 				
@@ -114,7 +116,7 @@ class PlgSystemFlJoomlaFix extends JPlugin
 				
 				$pathinfo = pathinfo($file);
 			
-				$xml .= '<fields name="' . $i . '">';
+				$xml .= '<fields name="f_' . $i . '">';
 				
 				$xml .= '<field type="radio" name="enable" label="' . $pathinfo['basename'] . '" description="' . $file . '" class="btn-group btn-group-yesno" default="1"><option value="0">JNO</option><option value="1">JYES</option></field>';
 				
@@ -155,8 +157,10 @@ class PlgSystemFlJoomlaFix extends JPlugin
 		
 		$classes = $this->params->get('override_classes', array());
 		
-		foreach ($classes as $class => $value)
+		foreach ($classes as $key => $value)
 		{
+			$class = str_replace('-', '\\', $key);
+			
 			if($value->enable && file_exists($path.$value->file))
 			{
 				JLoader::register($class, $path.$value->file, true);
